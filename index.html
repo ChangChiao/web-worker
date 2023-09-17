@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="start">start</button>
+    <h1></h1>
+  </body>
+  <script>
+    document.getElementById("start").addEventListener("click", () => {
+      const worker = new Worker("./worker.js");
+      worker.onmessage = (e) => {
+        console.log("e", e);
+        document.getElementsByTagName(
+          "h1"
+        )[0].textContent = `result is ${e.data}`;
+      };
+
+      worker.postMessage({ action: "calc" });
+    });
+  </script>
+</html>
